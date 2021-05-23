@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "moduleResolution": "node",
+        "baseUrl": "./node_modules",
+        "declaration": true
+    },
+    "exclude": ["./node_modules"]
+}
