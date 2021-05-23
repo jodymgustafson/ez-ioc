@@ -1,5 +1,5 @@
-declare type FactoryFunction<T = object> = (...depends: object[]) => T;
-declare type ConstructorFunction<T = object> = new (...depends: object[]) => T;
+declare type FactoryFunction<T = object> = (...depends: any[]) => T;
+declare type ConstructorFunction<T = object> = new (...depends: any[]) => T;
 declare type IocIdentifier = string | symbol;
 export declare type EzIocContainerConfig = {
     /** If true an error won't be thrown when trying to resolve unknown identifiers, will return undefined */

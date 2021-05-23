@@ -1,5 +1,5 @@
-type FactoryFunction<T=object> = (...depends: object[]) => T;
-type ConstructorFunction<T=object> = new (...depends: object[]) => T;
+type FactoryFunction<T=object> = (...depends: any[]) => T;
+type ConstructorFunction<T=object> = new (...depends: any[]) => T;
 type IocIdentifier = string|symbol;
 
 /** Defines a factory function in the container */
