@@ -113,7 +113,7 @@ iocContainer.bind("Zoo", Zoo, ["Animal", "Bear"]);
 
 You may also bind a factory function. A factory function is a function that creates an object. It works almost identically to binding a constructor except it uses the `bindFactory()` method. Note that the list of dependencies is optional.
 
-    const func = (a1, a2) => { animals: [a1, a2] };
+    const func = (a1, a2) => ({ animals: [a1, a2] });
     iocContainer.bindFactory("Zoo", func, ["Animal", "Bear"]);
 
 In this case the factory function will be called with the objects that "Animal" and "Bear" resolve to.
