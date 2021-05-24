@@ -32,7 +32,9 @@ interface Animal{...}
 class Lion implements Animal{...}
 class Bear implements Animal{...}
 interface Zoo{...}
-class MyZoo implements Zoo{...}
+class MyZoo implements Zoo {
+    constructor(animal1: Animal, animal2: Animal) {...}
+}
 
 import iocContainer from "ez-ioc";
 
@@ -61,12 +63,12 @@ or
 
     const iocContainer = require("ez-ioc");
 
-or create one
+Or create your own:
 
     import {EzIocContainer} from "ez-ioc";
     const myContainer = new EzIocContainer();
 
-By default if you try to resolve an identifier that doesn't exist in your container it will throw an error. If you don't want that behavior pass in a config object to the constructor with allowUnbound = true. In that case it will return undefined rather than throw an error.
+By default if you try to resolve an identifier that doesn't exist in your container it will throw an error. If you don't want that behavior pass in a config object to the constructor with allowUnbound = true. In that case it will return `undefined` rather than throw an error.
 
     const myContainer = new EzIocContainer({ allowUnbound: true });
 
@@ -78,7 +80,7 @@ There are a number of different bindings you can create.
 - Bind to a constructor function
 - Bind to a factory function
 
-In all cases you bind a name to an implementation. The name can be a `string` or a `Symbol`.
+In all cases you bind an identifier to an implementation. The identifier can be a `string` or a `Symbol`.
 
 There are two bind methods:
 - bind()
@@ -90,15 +92,22 @@ The simplest bind is binding to an instance of an object. Use the `bind()` metho
 
     iocContainer.bind("Bear", new Bear());
 
+Every time "Bear" is resolved it will return the same object.
+
 ### Bind to Constructor
 
 To bind to a object/class constructor also use the `bind()` method. This will create a new instance every time you resolve it.
 
     iocContainer.bind("Animal", Lion);
 
-If the constructor takes other dependencies as parameters you can define those as a third parameter which is an array of identifiers. The container will resolve those dependencies and inject them into the constructor in the order listed. If those dependencies also list dependencies they will be resolved also, all the way down the object hierarchy.
+If the constructor takes other dependencies as parameters you can define those as a third parameter which is an array of identifiers. The container will resolve those dependencies and inject them into the constructor in the order listed. If those dependencies also have dependencies they will be resolved too, all the way down the object hierarchy.
 
-    iocContainer.bind("Zoo", Zoo, ["Animal", "Bear"]);
+```
+class MyZoo implements Zoo {
+    constructor(readonly ...animals: Animal[]) {}
+}
+iocContainer.bind("Zoo", Zoo, ["Animal", "Bear"]);
+```
 
 ### Bind to Factory Function
 
@@ -117,7 +126,7 @@ Use the `resolve()` method to resolve bindings. It works the same no matter whic
 
 ### Using Symbols
 
-It's not necessary, but you can use Symbols instead of strings for bind identifiers. You might even build a set of identifiers and use them throughout your code to make sure you don't make mistakes. Usually you would use your type's name for the symbol name.
+If desired you can use Symbols instead of strings for bind identifiers. You might even build a set of identifiers and use them throughout your code to make sure you don't make mistakes. Usually you would use your type's name for the symbol name.
 
 ```
 const TYPES = {
@@ -129,8 +138,10 @@ iocContainer.bind(TYPES.Animal, Lion);
 const animal = iocContainer.resolve(TYPES.Animal);
 ```
 
-### But why?
+## More Examples
 
-Cause I didn't like any other IOC packages out there. None of them seemed either simple enough or did what I needed so I made my own. Plus most of them have horrible documentation, which I hope is not the case here. (I mean why create a public package if you're not going to tell people how to use it?)
+For more examples visit the GitHub repo and look at the `/examples` folder or unit tests in the `/spec` folder.
 
-### Code Hard
+https://github.com/jodymgustafson/ez-ioc
+
+## Code Hard

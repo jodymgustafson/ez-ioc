@@ -1,8 +1,12 @@
 {
   "name": "ez-ioc",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple IOC container",
   "main": "index.js",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/jodymgustafson/ez-ioc"
+  },
   "scripts": {
     "test": "jasmine"
   },
