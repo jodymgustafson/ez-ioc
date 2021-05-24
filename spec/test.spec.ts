@@ -40,7 +40,7 @@ describe("When resolve factory function", () => {
     it("should get the correct object", () => {
         const fn = (): Animal => ({ name: "monkey" });
         const container = new EzIocContainer().bindFactory<Animal>(TYPES.Animal, fn);
-        expect(container.resolve(TYPES.Animal)).toEqual({ name: "monkey" });
+        expect(container.resolve<Animal>(TYPES.Animal)).toEqual({ name: "monkey" });
     });
 });
 
