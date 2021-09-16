@@ -10,7 +10,7 @@
   "scripts": {
     "test": "jasmine",
     "package": "npm pack",
-    "publish": "npm publish"
+    "release": "npm publish"
   },
   "keywords": [
     "ioc",
