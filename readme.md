@@ -161,7 +161,7 @@ iocContainer.lazyBindFactory("Zoo", func, ["Animal", "Bear"]);
 Use the `resolve()` method to resolve bindings. It works the same no matter which kind of binding you've created.
 
 ```typescript
-const zoo = iocContainer.resolve("Zoo");
+const zoo: Zoo = iocContainer.resolve("Zoo");
 ```
 
 ### Using Symbols
