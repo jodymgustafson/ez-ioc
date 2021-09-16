@@ -102,8 +102,8 @@ In all cases you bind an identifier to an implementation. The identifier can be 
 There are four bind methods:
 - bind()
 - bindFactory()
-- lazyBind()
-- lazyBindFactory()
+- bindLazy()
+- bindFactoryLazy()
 
 ### Bind to Singleton
 
@@ -147,13 +147,13 @@ In this case the factory function will be called with the objects that "Animal" 
 
 Sometimes you may have an instance of an object that you want to create bindings for but are not sure that they will be used. In that case you can use lazy load bindings to bind a constructor or factory function. The first time the binding is resolved an object instance will be created and cached. Subsequent resolves will then use the cached instance.
 
-Just use the `lazyBind` or `lazyBindFactory` methods which take the same parameters as their non-lazy counterparts.
+Just use the `bindLazy` or `bindFactoryLazy` methods which take the same parameters as their non-lazy counterparts.
 
 ```typescript
-iocContainer.lazyBind("Zoo", Zoo, ["Animal", "Bear"]);
+iocContainer.bindLazy("Zoo", Zoo, ["Animal", "Bear"]);
 
 const func = (a1, a2) => ({ animals: [a1, a2] });
-iocContainer.lazyBindFactory("Zoo", func, ["Animal", "Bear"]);
+iocContainer.bindFactoryLazy("Zoo", func, ["Animal", "Bear"]);
 ```
 
 ### Resolve Bindings
@@ -162,6 +162,20 @@ Use the `resolve()` method to resolve bindings. It works the same no matter whic
 
 ```typescript
 const zoo: Zoo = iocContainer.resolve("Zoo");
+```
+
+### Async Bindings
+
+You may have to bind a factory function that does some async work. In that case you will need to add `async` to the function definition and `await` to return a promise.
+
+```typescript
+iocContained.bindFactory("MyService", async () => await getMyService());
+```
+
+Then when you resolve it you can use `await` to resolve the promise.
+
+```typescript
+const svc: MyService = await iocContainer.resolve("MyService");
 ```
 
 ### Using Symbols

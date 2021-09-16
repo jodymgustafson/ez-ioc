@@ -8,7 +8,9 @@
       "url": "https://github.com/jodymgustafson/ez-ioc"
   },
   "scripts": {
-    "test": "jasmine"
+    "test": "jasmine",
+    "package": "npm pack",
+    "publish": "npm publish"
   },
   "keywords": [
     "ioc",

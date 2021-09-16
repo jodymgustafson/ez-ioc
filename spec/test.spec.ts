@@ -107,7 +107,7 @@ describe("When resolve constructor with deep dependencies", () => {
 describe("When lazy resolve constructor", () => {
     const container = new EzIocContainer();
     beforeAll(() => {
-        container.lazyBind(TYPES.Animal, Lion);
+        container.bindLazy(TYPES.Animal, Lion);
     });
     it("should get the correct object", () => {
         const animal = container.resolve(TYPES.Animal);
@@ -122,8 +122,8 @@ describe("When lazy resolve constructor with dependencies", () => {
     let zoo: Zoo;
     beforeAll(() => {
         container.bind(TYPES.Animal, Lion)
-            .lazyBind("Bear", Bear)
-            .lazyBind(TYPES.Zoo, TestZoo, [TYPES.Animal, "Bear"]);
+            .bindLazy("Bear", Bear)
+            .bindLazy(TYPES.Zoo, TestZoo, [TYPES.Animal, "Bear"]);
         zoo = container.resolve(TYPES.Zoo);
     });
     it("should get the correct objects", () => {
@@ -148,7 +148,7 @@ describe("When lazy resolve factory function", () => {
             count++;
             return { name: "monkey" };
         };
-        container.lazyBindFactory<Animal>(TYPES.Animal, fn);
+        container.bindFactoryLazy<Animal>(TYPES.Animal, fn);
         animal = container.resolve<Animal>(TYPES.Animal);
     });
     it("should get the correct object", () => {
@@ -170,8 +170,8 @@ describe("When lazy resolve factory function with dependencies", () => {
             count++;
             return new TestZoo(lion, bear);
         }
-        container.lazyBindFactory<Zoo>(TYPES.Zoo, fn, [TYPES.Animal, "Bear"])
-            .lazyBind<Animal>("Bear", Bear)
+        container.bindFactoryLazy<Zoo>(TYPES.Zoo, fn, [TYPES.Animal, "Bear"])
+            .bindLazy<Animal>("Bear", Bear)
             .bind<Animal>(TYPES.Animal, Lion);        
         zoo = container.resolve(TYPES.Zoo);
     });

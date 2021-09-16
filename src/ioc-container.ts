@@ -62,7 +62,7 @@ export type EzIocContainerConfig = {
         }
 
         // Create a regular binding
-        this.bindings[identifier as any] = typeOrInstance;
+        this.bindings[identifier] = typeOrInstance;
         return this;
     }
 
@@ -73,7 +73,7 @@ export type EzIocContainerConfig = {
      * @param dependencies Optional list of dependencies to be passed into the function
      */
     bindFactory<T extends object>(identifier: IocIdentifier, factoryFn: FactoryFunction<T>, dependencies?: IocIdentifier[]): EzIocContainer {
-        this.bindings[identifier as any] = new IocFactory(factoryFn, dependencies);
+        this.bindings[identifier] = new IocFactory(factoryFn, dependencies);
         return this;
     }
 
@@ -83,7 +83,7 @@ export type EzIocContainerConfig = {
      * @param type Type (constructor) to bind the interface to
      * @param dependencies Optional list of dependencies to be injected into the constructor
      */
-     lazyBind<T extends object>(identifier: IocIdentifier, type: ConstructorFunction<T>, dependencies?: IocIdentifier[]): EzIocContainer {
+     bindLazy<T extends object>(identifier: IocIdentifier, type: ConstructorFunction<T>, dependencies?: IocIdentifier[]): EzIocContainer {
         let instance: T;
         this.bindFactory(identifier, (...deps) => instance ?? (instance = new type(...deps)), dependencies);
         return this;
@@ -95,7 +95,7 @@ export type EzIocContainerConfig = {
      * @param factoryFn A factory function that creates an object
      * @param dependencies Optional list of dependencies to be passed into the function
      */
-     lazyBindFactory<T extends object>(identifier: IocIdentifier, factoryFn: FactoryFunction<T>, dependencies?: IocIdentifier[]): EzIocContainer {
+     bindFactoryLazy<T extends object>(identifier: IocIdentifier, factoryFn: FactoryFunction<T>, dependencies?: IocIdentifier[]): EzIocContainer {
         let instance: T;
         this.bindFactory(identifier, (...deps) => instance ?? (instance = factoryFn(...deps)), dependencies);
         return this;
@@ -107,7 +107,7 @@ export type EzIocContainerConfig = {
      * @throws If the binding doesn't exist, unless allowUnbound is true in configuration
      */
     resolve<T extends object>(identifier: IocIdentifier): T {
-        const c = this.bindings[identifier as any];
+        const c = this.bindings[identifier];
         if (c) {
             if (typeof c === "object") {
                 if (c instanceof IocFactory) {
