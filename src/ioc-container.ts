@@ -14,6 +14,17 @@ export type EzIocContainerConfig = {
     allowRebind?: boolean
 };
 
+let defaultConfig: EzIocContainerConfig = {};
+
+/**
+ * Sets the default config to be used when creating an EzIocContainer.
+ * Will not affect the default container.
+ * @param config An EzIocContainerConfig
+ */
+export function setDefaultConfig(config: EzIocContainerConfig): void {
+    defaultConfig = config;
+}
+
 /**
  * Implements an IOC container
  */
@@ -24,7 +35,7 @@ export type EzIocContainerConfig = {
      * Creates an instance
      * @param config Optional configuration
      */
-    constructor(readonly config: EzIocContainerConfig = {}) {}
+    constructor(readonly config: EzIocContainerConfig = defaultConfig) {}
 
     /**
      * Binds an identifier to a constructor (with dependencies) that will be used to create an object every time it is resolved
