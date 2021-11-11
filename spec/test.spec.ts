@@ -1,5 +1,4 @@
-import iocContainer, { EzIocContainer } from "..";
-import { setDefaultConfig, setDefaultContainer } from "../src/ioc-container";
+import iocContainer, { EzIocContainer, setDefaultConfig } from "..";
 
 const TYPES = {
     Animal: Symbol.for("Animal"),

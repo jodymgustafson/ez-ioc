@@ -1,8 +1,9 @@
-import iocContainer, { EzIocContainer, EzIocContainerConfig } from "./src/ioc-container";
+import iocContainer, { EzIocContainer, EzIocContainerConfig, setDefaultConfig } from "./src/ioc-container";
 
 export default iocContainer;
 
 export {
     EzIocContainer,
-    EzIocContainerConfig
+    EzIocContainerConfig,
+    setDefaultConfig
 }
