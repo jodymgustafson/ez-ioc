@@ -35,7 +35,7 @@ export function setDefaultConfig(config: EzIocContainerConfig): void {
      * Creates an instance
      * @param config Optional configuration
      */
-    constructor(readonly config: EzIocContainerConfig = defaultConfig) {}
+    constructor(readonly config: EzIocContainerConfig = Object.assign({}, defaultConfig)) {}
 
     /**
      * Binds an identifier to a constructor (with dependencies) that will be used to create an object every time it is resolved
