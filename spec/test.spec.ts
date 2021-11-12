@@ -1,4 +1,4 @@
-import { EzIocContainer } from "..";
+import iocContainer, { EzIocContainer, setDefaultConfig } from "..";
 
 const TYPES = {
     Animal: Symbol.for("Animal"),
@@ -220,5 +220,17 @@ describe("When rebind existing identifier with allowRebind", () => {
         const container = new EzIocContainer({ allowRebind: true });
         container.bind("Foo", {});
         expect(container.bind("Foo", {})).toBe(container);
+    });
+});
+
+describe("When change default config", () => {
+    afterAll(() => {
+        setDefaultConfig({});
+    })
+    it("should change the config", () => {
+        expect(iocContainer.config).toEqual({});
+        setDefaultConfig({ allowRebind: true });
+        const container = new EzIocContainer();
+        expect(container.config).toEqual({ allowRebind: true });
     });
 });

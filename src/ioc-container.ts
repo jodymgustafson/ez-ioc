@@ -14,6 +14,17 @@ export type EzIocContainerConfig = {
     allowRebind?: boolean
 };
 
+let defaultConfig: EzIocContainerConfig = {};
+
+/**
+ * Sets the default config to be used when creating an EzIocContainer.
+ * Will not affect the default container.
+ * @param config An EzIocContainerConfig
+ */
+export function setDefaultConfig(config: EzIocContainerConfig): void {
+    defaultConfig = config;
+}
+
 /**
  * Implements an IOC container
  */
@@ -24,7 +35,7 @@ export type EzIocContainerConfig = {
      * Creates an instance
      * @param config Optional configuration
      */
-    constructor(readonly config: EzIocContainerConfig = {}) {}
+    constructor(readonly config: EzIocContainerConfig = Object.assign({}, defaultConfig)) {}
 
     /**
      * Binds an identifier to a constructor (with dependencies) that will be used to create an object every time it is resolved
@@ -85,7 +96,7 @@ export type EzIocContainerConfig = {
      */
      bindLazy<T extends object>(identifier: IocIdentifier, type: ConstructorFunction<T>, dependencies?: IocIdentifier[]): EzIocContainer {
         let instance: T;
-        this.bindFactory(identifier, (...deps) => instance ?? (instance = new type(...deps)), dependencies);
+        this.bindFactory(identifier, (...deps) => instance || (instance = new type(...deps)), dependencies);
         return this;
     }
 
@@ -97,7 +108,7 @@ export type EzIocContainerConfig = {
      */
      bindFactoryLazy<T extends object>(identifier: IocIdentifier, factoryFn: FactoryFunction<T>, dependencies?: IocIdentifier[]): EzIocContainer {
         let instance: T;
-        this.bindFactory(identifier, (...deps) => instance ?? (instance = factoryFn(...deps)), dependencies);
+        this.bindFactory(identifier, (...deps) => instance || (instance = factoryFn(...deps)), dependencies);
         return this;
     }
 
