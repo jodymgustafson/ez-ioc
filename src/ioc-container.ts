@@ -96,7 +96,7 @@ export function setDefaultConfig(config: EzIocContainerConfig): void {
      */
      bindLazy<T extends object>(identifier: IocIdentifier, type: ConstructorFunction<T>, dependencies?: IocIdentifier[]): EzIocContainer {
         let instance: T;
-        this.bindFactory(identifier, (...deps) => instance ?? (instance = new type(...deps)), dependencies);
+        this.bindFactory(identifier, (...deps) => instance || (instance = new type(...deps)), dependencies);
         return this;
     }
 
@@ -108,7 +108,7 @@ export function setDefaultConfig(config: EzIocContainerConfig): void {
      */
      bindFactoryLazy<T extends object>(identifier: IocIdentifier, factoryFn: FactoryFunction<T>, dependencies?: IocIdentifier[]): EzIocContainer {
         let instance: T;
-        this.bindFactory(identifier, (...deps) => instance ?? (instance = factoryFn(...deps)), dependencies);
+        this.bindFactory(identifier, (...deps) => instance || (instance = factoryFn(...deps)), dependencies);
         return this;
     }
 
