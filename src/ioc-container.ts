@@ -113,6 +113,14 @@ export function setDefaultConfig(config: EzIocContainerConfig): void {
     }
 
     /**
+     * Removes a binding from the container
+     * @param identifier Identifier of the binding to remove
+     */
+    unbind(identifier: IocIdentifier): void {
+        delete this.bindings[identifier];
+    }
+
+    /**
      * Gets an instance for an identifier as defined by bind() 
      * @param identifier Identifier of the binding
      * @throws If the binding doesn't exist, unless allowUnbound is true in configuration

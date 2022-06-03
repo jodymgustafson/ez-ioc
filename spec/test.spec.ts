@@ -191,6 +191,17 @@ describe("When lazy resolve factory function with dependencies", () => {
     });
 });
 
+describe("When unbind", () => {
+    it("Should remove a binding", () => {
+        const container = new EzIocContainer({ allowUnbound: true });
+        container.bind("id1", {});
+        container.bind("id2", {});
+        container.unbind("id1");
+        expect(container.resolve("id1")).toBeUndefined();
+        expect(container.resolve("id2")).toBeDefined();
+    })
+});
+
 // Configuration ///////////////////////////////////////
 
 describe("When resolve unknown identifier", () => {

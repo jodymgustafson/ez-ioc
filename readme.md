@@ -156,6 +156,14 @@ const func = (a1, a2) => ({ animals: [a1, a2] });
 iocContainer.bindFactoryLazy("Zoo", func, ["Animal", "Bear"]);
 ```
 
+### Remove a Binding
+
+If you have the need to remove a binding use `unbind`.
+
+```javascript
+iocContainer.unbind("Animal");
+```
+
 ### Resolve Bindings
 
 Use the `resolve()` method to resolve bindings. It works the same no matter which kind of binding you've created.
